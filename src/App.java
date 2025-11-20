@@ -10,7 +10,7 @@ public class App {
 	// 6. Probabilidad de mutación: 0.3
 	
 	public static double[] generaIndividuo(double[] aleatorios, int pos) {
-		double[] individuo = new double[4];
+		double individuo[] = new double[4];
 		for (int i = 0; i < individuo.length; i++){
 			individuo[i] = aleatorios[pos] < 0.5 ? 0 : 1;
 			pos++;
@@ -20,14 +20,14 @@ public class App {
 	
     public static void main(String[] args) throws Exception {
 
-		double[] aleatorios = new double[32];
+		double aleatorios[] = new double[32];
 		for (int i = 0; i < 32; i++) {
 			aleatorios[i] = Math.round(Math.random() * 100) / 100.0;
 		}
 		int cromosoma = (int)(Math.random() * 2) + 1;
 
-		double[] individuo1 = generaIndividuo(aleatorios, 0);
-		double[] individuo2 = generaIndividuo(aleatorios, 4);
+		double individuo1[] = generaIndividuo(aleatorios, 0);
+		double individuo2[] = generaIndividuo(aleatorios, 4);
 
 		for (int i = 0; i < aleatorios.length; i++)
 			System.out.print(aleatorios[i] + " ");
