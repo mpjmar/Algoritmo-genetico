@@ -3,6 +3,7 @@ package funciones;
 public class Funciones {
 	public static int posAleatorios = 0;
 
+	// generamos descendencia hasta que encontramos la solución o agotamos los números aleatorios
 	public static void buscaResultados (double[] aleatorios, int objetivo, int[] individuo1, int[] individuo2) throws InterruptedException {
 		boolean encontrado = false;
 		int[][] poblacion;
@@ -67,7 +68,7 @@ public class Funciones {
 		return mejores;
     }
 
-	// combina cromosomas de los padres y devuelve la poblacion de padres e hijos
+	// combinamos cromosomas de los padres y devuelve la poblacion de padres e hijos
 	public static int[][] generaDescendencia(double[] aleatorios, int[] padre1, int[] padre2) {
 		int longCromos = padre1.length;
 		int puntoCorte = calculaPuntoDeCorte(aleatorios, longCromos);
@@ -92,6 +93,7 @@ public class Funciones {
 		return puntoCorte;
     }
 
+	// muta el cromosoma si el valor extraido de aleatorios es <= 0.3
 	public static void mutaCromosoma(double[] aleatorios, int[] cromosoma) {
 		double probBase = 0.3;
 		for (int i = 0; i < cromosoma.length; i++) {
@@ -150,6 +152,7 @@ public class Funciones {
 		return valores;
 	}
 
+	// muestra el cromosoma del individuo
 	public static void muestraCromosoma(int[] valores, int individuo) {
 		System.out.printf("Cromosoma del individuo %d%n", individuo);
 		System.out.println("-".repeat(57));

@@ -1,7 +1,6 @@
 package funciones;
 
 public class Basicas {
-	// generamos el conjunto de valores con los que vamos a trabajar
 	public static double[] generaAleatorios(int cantidad) {
 		double aleatorios[] = new double[cantidad];
 		for (int i = 0; i < cantidad; i++) {
@@ -35,7 +34,6 @@ public class Basicas {
 		System.out.println("\n");
 	}
 
-    // convertimos el cromosoma a decimal
     public static int deBinarioADecimal(int[] binario) {
         int decimal = 0;
         int potencia = 0;

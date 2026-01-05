@@ -25,6 +25,7 @@ public class App {
 		int[] individuo1 = Funciones.generaIndividuo(aleatorios, 1);
 		int[] individuo2 = Funciones.generaIndividuo(aleatorios, 2);
 
+		// busca y muestra los resultados
 		Funciones.buscaResultados(aleatorios, objetivo, individuo1, individuo2);
 	}
 }
