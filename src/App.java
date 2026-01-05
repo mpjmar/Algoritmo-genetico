@@ -19,19 +19,12 @@ public class App {
 		int objetivo = Integer.parseInt(System.console().readLine());
 
 		// generamos los valores con los que vamos a trabajar
-		double[] aleatorios = Basicas.generaAleatorios(64);
+		double[] aleatorios = Basicas.generaAleatorios(256);
 
 		// obtenemos los 2 primeros individuos que fonman la generación inicial y muestra sus cromosomas
-		int[] individuo1 = Funciones.generaIndividuo(Funciones.extraeValores(aleatorios, 8), 1);
-		int[] individuo2 = Funciones.generaIndividuo(Funciones.extraeValores(aleatorios, 8), 2);
+		int[] individuo1 = Funciones.generaIndividuo(aleatorios, 1);
+		int[] individuo2 = Funciones.generaIndividuo(aleatorios, 2);
 
-		// obtenemos y mostramos los genotipos de los individuos
-		int[] genotipos = Funciones.obtieneResultado(individuo1, individuo2, objetivo);
-
-		// emparejamos a los 2 individuos
-		Funciones.emparejaIndividuos(individuo1, individuo2);
-
-
-		
+		Funciones.buscaResultados(aleatorios, objetivo, individuo1, individuo2);
 	}
 }

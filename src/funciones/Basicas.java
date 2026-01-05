@@ -7,14 +7,14 @@ public class Basicas {
 		for (int i = 0; i < cantidad; i++) {
 			aleatorios[i] = Math.round(Math.random() * 100) / 100.0;
 		}
-		muestraArray(aleatorios);
+		muestraArray(aleatorios, "Valores aleatorios: ");
 		return aleatorios;
 	}
 
-	public static void muestraArray(double[] array) {
+	public static void muestraArray(double[] array, String mensaje) {
 		System.out.println();
-		System.out.println("Valores aleatorios: ");
-		System.out.println("-------------------");
+		System.out.println(mensaje);
+		System.out.println("-".repeat(mensaje.length()));
 		for (int i = 1; i <= array.length; i++) {
 			System.out.printf("%3.2f ", array[i - 1]);
 			if (i != 0 && i % 8 == 0)
@@ -23,12 +23,39 @@ public class Basicas {
 		System.out.println("\n");
 	}
 
+	public static void muestraArray(int[] array, String mensaje) {
+		System.out.println("\n" + mensaje);
+		System.out.println("-".repeat(mensaje.length()));
+		System.out.print("  ");
+		for (int i = 1; i <= array.length; i++) {
+			System.out.printf("%d ", array[i - 1]);
+			if (i != 0 && i % 8 == 0)
+				System.out.println();
+		}
+		System.out.println("\n");
+	}
+
     // convertimos el cromosoma a decimal
-    public static int deBinarioADecimal(int[] array) {
+    public static int deBinarioADecimal(int[] binario) {
         int decimal = 0;
         int potencia = 0;
-        for (int i = array.length - 1; i >= 0 ; i--)
-            decimal += (int)(Math.pow(2, potencia++)) * array[i];
+        for (int i = binario.length - 1; i >= 0 ; i--)
+            decimal += (int)(Math.pow(2, potencia++)) * binario[i];
         return decimal;
     }
+
+    public static int[] deDecimalABinario(int num, int longitud) {
+        int[] binario = new int[longitud];
+        for (int i = binario.length - 1; i >= 0; i--) {
+			binario[i] = num % 2;
+			num /= 2;
+		}
+        return binario;
+    }
+
+	public static void swap(int[] array, int pos1, int pos2) {
+		int temp = array[pos1];
+		array[pos1] = array[pos2];
+		array[pos2] = temp;
+	}
 }
