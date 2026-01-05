@@ -1,9 +1,30 @@
 package funciones;
 
+/**
+ * Clase que contiene las funciones principales del algoritmo genético.
+ * Implementa operaciones de cruzamiento, mutación, selección y evaluación
+ * de individuos para encontrar dos números que sumen un objetivo dado.
+ * 
+ * @author M. Paz Jimenez Martin
+ * @version 1.0
+ */
+
 public class Funciones {
+
+	/** Índice global para controlar la posición actual en el array de números aleatorios */
 	public static int posAleatorios = 0;
 
-	// generamos descendencia hasta que encontramos la solución o agotamos los números aleatorios
+	/**
+     * Genera descendencia hasta encontrar la solución o agotar los recursos (números aleatorios).
+     * Ejecuta el ciclo evolutivo del algoritmo genético iterando generaciones hasta
+     * encontrar dos individuos cuya suma sea igual al objetivo.
+     * 
+     * @param aleatorios Array de números aleatorios usado por el algoritmo
+     * @param objetivo Valor que deben sumar los dos individuos buscados
+     * @param individuo1 Primer individuo de la población inicial (cromosoma binario)
+     * @param individuo2 Segundo individuo de la población inicial (cromosoma binario)
+     * @throws InterruptedException Si el hilo es interrumpido durante la pausa entre generaciones
+     */
 	public static void buscaResultados (double[] aleatorios, int objetivo, int[] individuo1, int[] individuo2) throws InterruptedException {
 		boolean encontrado = false;
 		int[][] poblacion;
@@ -51,7 +72,14 @@ public class Funciones {
 			System.out.printf("Los mejores valores encontrados son %d y %d (%d).%n", mejores[0], mejores[1], mejores[0] + mejores[1]);
 	}
 	
-    // seleccionamos los 2 mejores individuos
+    /**
+     * Selecciona los 2 mejores individuos de la población evaluando todas las parejas posibles.
+     * Calcula la pareja cuya suma se acerca más al objetivo usando la función de fitness.
+     * 
+     * @param poblacion Array con los fenotipos (valores decimales) de todos los individuos
+     * @param objetivo Valor objetivo que deben sumar los dos individuos
+     * @return Array con los dos mejores individuos (fenotipos)
+     */
     public static int[] calculaFitness(int[] poblacion, int objetivo) {
 		int[] mejores = new int[2];
 		int suma = 0, diferencia = Integer.MAX_VALUE;
@@ -68,7 +96,15 @@ public class Funciones {
 		return mejores;
     }
 
-	// combinamos cromosomas de los padres y devuelve la poblacion de padres e hijos
+	/**
+     * Combina los cromosomas de los padres mediante cruzamiento de un punto
+     * y aplica mutación a los hijos generados.
+     * 
+     * @param aleatorios Array de números aleatorios para determinar punto de corte y mutación
+     * @param padre1 Cromosoma del primer padre (array binario)
+     * @param padre2 Cromosoma del segundo padre (array binario)
+     * @return Matriz con la población completa: 2 padres y 2 hijos
+     */
 	public static int[][] generaDescendencia(double[] aleatorios, int[] padre1, int[] padre2) {
 		int longCromos = padre1.length;
 		int puntoCorte = calculaPuntoDeCorte(aleatorios, longCromos);
@@ -84,8 +120,14 @@ public class Funciones {
 		return poblacion;
 	}
 
-	// calculamos el punto de corte de los cromosomas sobre el que se va a hacer el intercambio 
-	// utilizando el siguiente valor del conjunto
+	/**
+     * Calcula el punto de corte para el cruzamiento de cromosomas
+     * utilizando el siguiente valor del conjunto de aleatorios.
+     * 
+     * @param aleatorios Array de números aleatorios
+     * @param longCromosoma Longitud del cromosoma
+     * @return Índice del punto de corte para el cruzamiento
+     */
 	public static int calculaPuntoDeCorte(double[] aleatorios, int longCromosoma) {
         int puntosPosibles = longCromosoma - 1;
         double[] valor = extraeValores(aleatorios, 1);
@@ -93,7 +135,13 @@ public class Funciones {
 		return puntoCorte;
     }
 
-	// muta el cromosoma si el valor extraido de aleatorios es <= 0.3
+	/**
+     * Aplica mutación al cromosoma si el valor extraído de aleatorios es menor o igual a 0.3.
+     * Para cada gen, extrae un valor aleatorio y si es <= 0.3, invierte el gen.
+     * 
+     * @param aleatorios Array de números aleatorios para determinar si muta cada gen
+     * @param cromosoma Cromosoma a mutar (se modifica directamente)
+     */
 	public static void mutaCromosoma(double[] aleatorios, int[] cromosoma) {
 		double probBase = 0.3;
 		for (int i = 0; i < cromosoma.length; i++) {
@@ -103,7 +151,15 @@ public class Funciones {
 		}
 	}
 
-	// devuelve una matriz que contiene la poblacion de padres e hijos
+	/**
+     * Crea una matriz que contiene la población completa de padres e hijos.
+     * 
+     * @param padre1 Cromosoma del primer padre
+     * @param padre2 Cromosoma del segundo padre
+     * @param hijo1 Cromosoma del primer hijo
+     * @param hijo2 Cromosoma del segundo hijo
+     * @return Matriz 4x8 con la población completa
+     */
 	public static int[][] generaPoblacion(int[] padre1, int[] padre2, int[] hijo1, int[] hijo2) {
 		int[][] poblacion = new int[4][padre1.length];
 		for (int i = 0; i < poblacion.length; i++) {
@@ -118,7 +174,13 @@ public class Funciones {
 		return poblacion;
 	}
 
-	// convierte a decimal el valor binario de los cromosomas
+	/**
+     * Convierte a decimal el valor binario de los cromosomas de la población
+     * y muestra los fenotipos por consola.
+     * 
+     * @param poblacion Matriz con los genotipos (cromosomas binarios) de la población
+     * @return Array con los fenotipos (valores decimales) correspondientes
+     */
 	public static int[] obtieneFenotipos(int[][] poblacion) {
 		int[] fenotipos = new int[poblacion.length];
 		for (int i = 0; i < poblacion.length; i++) {
@@ -129,7 +191,14 @@ public class Funciones {
 	}
 
     
-    // genera un individuo (si el valor es < 0.5 será 0 y si es >= será 1)
+    /**
+     * Genera un individuo inicial aleatorio.
+     * Cada gen del cromosoma será 0 si el valor aleatorio es menor a 0.5, o 1 si es mayor o igual.
+     * 
+     * @param aleatorios Array de números aleatorios
+     * @param individuo Número identificador del individuo (para mostrar)
+     * @return Genotipo del individuo generado (cromosoma binario de 8 bits)
+     */
 	public static int[] generaIndividuo(double[] aleatorios, int individuo) {
 		double valores[] = extraeValores(aleatorios, 8);
 		int genotipo[] = new int[8];
@@ -139,7 +208,15 @@ public class Funciones {
 		return (genotipo);
 	}
 
-	// extrae valores del array de aleatorios
+	/**
+     * Extrae un subconjunto de valores del array de aleatorios.
+     * Utiliza la variable global posAleatorios para controlar la posición actual.
+     * 
+     * @param aleatorios Array de números aleatorios
+     * @param longitud Cantidad de valores a extraer
+     * @return Array con los valores extraídos
+     * @throws RuntimeException Si no hay suficientes aleatorios disponibles
+     */
 	public static double[] extraeValores(double[] aleatorios, int longitud) {
 		if (posAleatorios + longitud > aleatorios.length) {
 			System.out.println();
@@ -152,7 +229,12 @@ public class Funciones {
 		return valores;
 	}
 
-	// muestra el cromosoma del individuo
+	/**
+     * Muestra visualmente el cromosoma del individuo en formato de tabla.
+     * 
+     * @param valores Cromosoma a mostrar (array binario)
+     * @param individuo Número identificador del individuo
+     */
 	public static void muestraCromosoma(int[] valores, int individuo) {
 		System.out.printf("Cromosoma del individuo %d%n", individuo);
 		System.out.println("-".repeat(57));
